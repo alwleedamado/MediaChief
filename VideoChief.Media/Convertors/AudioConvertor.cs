@@ -24,14 +24,13 @@ namespace VideoChief.Media.Convertors
 
             return Task.Run(() =>
             {
-                var regex = new Regex("file:///");
-                var inputFile = regex.Replace(_input, (s) => "");
-                if (File.Exists(inputFile))
+                if (File.Exists(Input))
                 {
-                    var dir = new FileInfo(inputFile).Directory!.FullName.ToString() + '/' + "mp3s";
-                    if(!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-                    var output = inputFile.Split('.')[0] + '.' + _codec;
-                    FFMpeg.ExtractAudio(inputFile, output);
+                    var outputDir = Path.Combine(Path.GetDirectoryName(Input)!, "OrbitOutput");
+                    if(!Path.Exists(outputDir)) Directory.CreateDirectory(outputDir);
+                    var fileInfo = new FileInfo(Input);
+                    var outputFile = $"{outputDir}/{fileInfo.Name.Split('.')[0]}.{_codec.ToLower()}";
+                    FFMpeg.ExtractAudio(Input, outputFile);
                 }
             });
         }

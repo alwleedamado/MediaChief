@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using VideoChief.ViewModels;
 
@@ -38,7 +39,7 @@ public partial class ConversionView : ReactiveWindow<ConversionViewModel>
 
     private async Task BrowseFiles(InteractionContext<Unit, List<string>> ctx)
     {
-        var files = await StorageProvider.OpenFilePickerAsync(new Avalonia.Platform.Storage.FilePickerOpenOptions
+        var files = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
             AllowMultiple = true,
             FileTypeFilter = [
@@ -47,7 +48,13 @@ public partial class ConversionView : ReactiveWindow<ConversionViewModel>
         });
         if (files.Count > 0)
         {
-            var paths = files.Select(x => x.Path.ToString()).ToList();
+            Regex regex = UriRegex();
+
+            var paths = files.Select(x =>
+            {
+                var path = x.Path.ToString();
+                return regex.Replace(path, s => "");
+            }).ToList();
             ctx.SetOutput(paths);
         }
 
@@ -55,31 +62,47 @@ public partial class ConversionView : ReactiveWindow<ConversionViewModel>
 
     private async Task ImportFolder(InteractionContext<Unit, List<string>> ctx)
     {
-        var dir = await StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions()
+        var directories = await StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions()
         {
-            AllowMultiple = false,
+            AllowMultiple = true,
 
         });
-        if (dir.Count > 0)
-        {
-            if (Directory.Exists(dir[0].Path.AbsolutePath.ToString()))
-            {
 
-                var files = Directory.EnumerateFiles(dir[0].Path.AbsolutePath.ToString());
-                var acceptedFiles = new List<string>();
-                foreach (var file in files)
+        if (directories.Count > 0)
+        {
+            Regex regex = UriRegex();
+
+            foreach (var directory in directories)
+            {
+                var directoryPath = regex.Replace(directory.Path.AbsolutePath.ToString(), (s) => "");
+
+                if (Directory.Exists(directoryPath))
                 {
-                    if (IsSupportedMedia(new FileInfo(file).Extension))
-                        acceptedFiles.Add(file);
+
+                    var files = Directory.EnumerateFiles(directoryPath);
+                    var acceptedFiles = new List<string>();
+                    foreach (var file in files)
+                    {
+                        if (IsSupportedMedia(new FileInfo(file).Extension))
+                            acceptedFiles.Add(file);
+                    }
+                    ctx.SetOutput(acceptedFiles);
                 }
-                ctx.SetOutput(acceptedFiles);
             }
         }
     }
 
-    private bool IsSupportedMedia(string ext)
+    private static bool IsSupportedMedia(string ext)
     {
+        if (string.IsNullOrEmpty(ext))
+        {
+            throw new ArgumentException($"'{nameof(ext)}' cannot be null or empty.", nameof(ext));
+        }
+
         List<string> exts = [".mp4", ".mkv", ".flv", ".webm", ".mp3", ".aac", ".ogg"];
         return exts.Contains(ext);
     }
+
+    [GeneratedRegex("file:///")]
+    private static partial Regex UriRegex();
 }
