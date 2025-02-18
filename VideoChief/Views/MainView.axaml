@@ -19,9 +19,15 @@
 					<Style Selector="StackPanel > Button">
 						<Setter Property="Width" Value="220"/>
 						<Setter Property="Height" Value="120"/>
+						<Setter Property="HorizontalAlignment" Value="Left"/>
+						<Setter Property="VerticalAlignment" Value="Center"/>
+
 					</Style>
-					<Style Selector="Image">
-						<Setter Property="Height" Value="80"/>
+					<Style Selector="PathIcon">
+						<Setter Property="Height" Value="64"/>
+						<Setter Property="Width" Value="64"/>
+						<Setter Property="VerticalAlignment" Value="Center"/>
+						<Setter Property="Margin" Value="0,10,0,0"/>
 					</Style>
 					<Style Selector="Button > StackPanel">
 						<Setter Property="Spacing" Value="10"/>
@@ -29,13 +35,13 @@
 				</StackPanel.Styles>
 				<Button Command="{Binding ConvertAudioCommand}">
 					<StackPanel>
-						<Image Source="/Assets/avalonia-logo.ico"/>
+						<PathIcon Data="{StaticResource music_regular}"/>
 						<TextBlock Text="Audio"/>
 					</StackPanel>
 				</Button>
 				<Button Command="{Binding ConvertVideoCommand}">
 					<StackPanel>
-						<Image Source="/Assets/avalonia-logo.ico"/>
+						<PathIcon Data="{StaticResource video_regular}"/>
 						<TextBlock Text="Video"/>
 					</StackPanel>
 				</Button>
