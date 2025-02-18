@@ -1,0 +1,36 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="VideoChief.Views.ConversionView"
+        Title="ConversionView"
+		Height="680"
+		WindowStartupLocation="CenterScreen"
+		ExtendClientAreaToDecorationsHint="True">
+	<Panel>
+		<ExperimentalAcrylicBorder>
+			<ExperimentalAcrylicBorder.Material>
+				<ExperimentalAcrylicMaterial
+					TintColor="Black"
+					TintOpacity="1"
+					MaterialOpacity="0.65"/>
+			</ExperimentalAcrylicBorder.Material>
+		</ExperimentalAcrylicBorder>
+		<Grid RowDefinitions="Auto,2*,*">
+			<StackPanel Margin="40,40,20,20" Spacing="5" Orientation="Horizontal" HorizontalAlignment="Right">
+				<Button Command="{Binding ImportFolderCommand}" Content="Import Folder" />
+				<Button Command="{Binding ImportFilesCommand}" Content="Import File"/>
+				<Button Command="{Binding ConvertCommand}" Content="Convert"/>
+
+			</StackPanel>
+			<DataGrid Grid.Row="1" IsReadOnly="True" ItemsSource="{Binding Files}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="File Name" Width="400" Binding="{Binding Path}"/>
+					<DataGridTextColumn Header="Extension" Binding="{Binding Extension}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+			<ContentControl Grid.Row="2" Content="{Binding SelectedConversionView}"/>
+		</Grid>
+	</Panel>
+</Window>
