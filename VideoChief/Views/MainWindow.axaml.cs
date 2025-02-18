@@ -1,8 +1,5 @@
-﻿using Avalonia.Controls;
-using Avalonia.Metadata;
-using Avalonia.ReactiveUI;
+﻿using Avalonia.ReactiveUI;
 using ReactiveUI;
-using System.Reactive;
 using System.Threading.Tasks;
 using VideoChief.ViewModels;
 
