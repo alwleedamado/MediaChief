@@ -9,15 +9,13 @@ namespace VideoChief.ViewModels
     internal class AudioConvversionTask : IMediaConverter
     {
         private readonly AudioCodec _codec;
-        private readonly decimal _bitRate;
-        private readonly decimal _sampleRate;
+        private readonly int _bitRate;
 
-        public AudioConvversionTask(List<MediaFile> files, AudioCodec codec, decimal bitRate, decimal sampleRate)
+        public AudioConvversionTask(List<MediaFile> files, AudioCodec codec, int bitRate)
         {
             Files = files;
             _codec = codec;
             _bitRate = bitRate;
-            _sampleRate = sampleRate;
         }
 
         public ConversionType ConversionType => ConversionType.Audio;
@@ -30,7 +28,7 @@ namespace VideoChief.ViewModels
             int i = 0;
             foreach (var file in Files)
             {
-                var convertor = new AudioConvertor(file.Path, _codec.ToString());
+                var convertor = new AudioConvertor(file.Path, _codec.ToString(), _bitRate);
                 tasks[i++] = convertor.Convert();
             }
             await Task.WhenAll(tasks);

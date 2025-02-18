@@ -11,17 +11,17 @@
 	<Border Padding="40">
 		<ScrollViewer>
 			
-		<Grid ColumnDefinitions="100, 400" RowDefinitions="Auto,Auto, Auto">
+		<Grid ColumnDefinitions="100, 400" RowDefinitions="Auto,Auto">
 			<Grid.Styles>
 				<Style Selector=":is(Control)">
-					<Setter Property="Margin" Value="0,0,0,1"/>
+					<Setter Property="Margin" Value="0,0,0,2"/>
 				</Style>
 				<Style Selector="Label">
 					<Setter Property="VerticalAlignment" Value="Center"/>
 				</Style>
 			</Grid.Styles>
 			<Label Content="Codec"/>
-			<ComboBox SelectedIndex="0" Grid.Column="1" ItemsSource="{Binding AudioCodecs}">
+			<ComboBox Width="200" SelectedItem="{Binding Codec}" Grid.Column="1" ItemsSource="{Binding AudioCodecs}">
 				<ComboBox.ItemTemplate>
 					<DataTemplate>
 						<TextBlock Text="{Binding}"/>
@@ -29,9 +29,13 @@
 				</ComboBox.ItemTemplate>
 			</ComboBox>
 			<Label Grid.Row="1" Content="Bitrate"/>
-			<TextBox Grid.Row="1" Grid.Column="1"/>
-			<Label Grid.Row="2" Content="Sample Rate"/>
-			<TextBox Grid.Row="2" Grid.Column="1"/>
+			<ComboBox Width="200" SelectedItem="{Binding Bitrate}" SelectedIndex="1" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Bitrates}">
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding}"/>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
 		</Grid>
 		</ScrollViewer>
 	</Border>

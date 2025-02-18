@@ -11,8 +11,8 @@
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
 		<vm:MainViewModel />
 	</Design.DataContext>
-	<Grid ColumnDefinitions="*,2*">
-		<Border Padding="20">
+	<Grid ColumnDefinitions="Auto,*">
+		<Border Padding="20,40,20,20">
 
 			<StackPanel Spacing="20">
 				<StackPanel.Styles>
@@ -43,14 +43,17 @@
 		</Border>
 
 		<Grid Grid.Column="1" RowDefinitions="*, Auto">
-			<DataGrid Margin="40" ItemsSource="{Binding Conversions}">
+			<DataGrid Margin="20,40,40,0" ItemsSource="{Binding Conversions}">
+				<DataGrid.Background>
+					<SolidColorBrush Color="#000"/>
+				</DataGrid.Background>
 				<DataGrid.Columns>
 					<DataGridTextColumn Binding="{Binding ConversionTypeName}" Header="Conversion Type"/>
-					<DataGridTextColumn Binding="{Binding Files.Count}" Header="Conversion Type"/>
+					<DataGridTextColumn Binding="{Binding Files.Count}" Header="Files Count"/>
 
 				</DataGrid.Columns>
 			</DataGrid>
-			<Button Grid.Row="1" HorizontalAlignment="Right" Width="100" Margin="20" Command="{Binding StartConversionCommand}" Content="Start"/>
+			<Button Grid.Row="1" HorizontalAlignment="Right" Width="100" Margin="20,20,40,20" Command="{Binding StartConversionCommand}" Content="Start"/>
 		</Grid>
 	</Grid>
 </UserControl>

@@ -6,26 +6,33 @@ namespace VideoChief.Media.Convertors
     {
         private readonly string _input;
         private string _codec;
-        public AudioConvertor(string input, string codec) : base(input)
+        private readonly int _bitrate;
+
+        public AudioConvertor(string input, string codec, int bitrate) : base(input)
         {
             _input = input;
             _codec = codec;
+            _bitrate = bitrate;
         }
 
-        public override Task Convert()
+        public override async Task Convert()
         {
 
-            return Task.Run(() =>
+            if (File.Exists(Input))
             {
-                if (File.Exists(Input))
-                {
-                    var outputDir = Path.Combine(Path.GetDirectoryName(Input)!, "OrbitOutput");
-                    if(!Path.Exists(outputDir)) Directory.CreateDirectory(outputDir);
-                    var fileInfo = new FileInfo(Input);
-                    var outputFile = $"{outputDir}/{fileInfo.Name.Split('.')[0]}.{_codec.ToLower()}";
-                    FFMpeg.ExtractAudio(Input, outputFile);
-                }
-            });
+                var outputDir = Path.Combine(Path.GetDirectoryName(Input)!, "OrbitOutput");
+                if (!Path.Exists(outputDir)) Directory.CreateDirectory(outputDir);
+                var fileInfo = new FileInfo(Input);
+                var outputFile = $"{outputDir}/{fileInfo.Name.Split('.')[0]}.{_codec.ToLower()}";
+                await FFMpegArguments
+                    .FromFileInput(fileInfo)
+                    .OutputToFile(outputFile, overwrite: true, delegate (FFMpegArgumentOptions options)
+                    {
+                        options.DisableChannel(FFMpegCore.Enums.Channel.Video);
+                        options.WithAudioCodec(_codec);
+                        options.WithAudioBitrate(_bitrate);
+                    }).ProcessAsynchronously();
+            }
         }
     }
 }

@@ -7,26 +7,21 @@ namespace VideoChief.ViewModels
     public class AudioConvrsionViewModel : ViewModelBase
     {
         public string[] AudioCodecs { get; } = Enum.GetNames(typeof(AudioCodec));
+        public int[] Bitrates { get; } = [124, 196, 320];
 
-        private AudioCodec _codec;
+
+        private AudioCodec _codec = AudioCodec.Mp3;
         public AudioCodec Codec
         {
             get { return _codec; }
             set { this.RaiseAndSetIfChanged(ref _codec, value); }
         }
 
-        private decimal _bitrate;
-        public decimal Bitrate
+        private int _bitrate = 124;
+        public int Bitrate
         {
             get { return _bitrate; }
             set { this.RaiseAndSetIfChanged(ref this._bitrate, value); }
-        }
-
-        private decimal _sampleRate;
-        public decimal SampleRate
-        {
-            get { return _sampleRate; }
-            set { this.RaiseAndSetIfChanged(ref _sampleRate, value); }
         }
     }
 }

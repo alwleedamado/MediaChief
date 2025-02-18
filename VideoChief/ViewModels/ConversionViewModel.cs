@@ -38,7 +38,6 @@ namespace VideoChief.ViewModels
             ImportFolderCommand = ReactiveCommand.CreateFromTask(async () =>
             {
                 var files = await ImportFolderInteraction.Handle(Unit.Default);
-                Files.Clear();
                 foreach (var file in files)
                 {
                     Files.Add(new MediaFile(file));
@@ -52,6 +51,7 @@ namespace VideoChief.ViewModels
                     Files.Add(new MediaFile(file));
                 }
             });
+
             ConvertCommand = ReactiveCommand.Create<MediaConversionViewModel>(() =>
             {
                 return conversionType == ConversionType.Audio ?
@@ -67,8 +67,7 @@ namespace VideoChief.ViewModels
         private MediaConversionViewModel CreateAudioTask()
         {
             var vm = _selectedConversionView as AudioConvrsionViewModel;
-
-            var task =  new AudioConvversionTask(Files.ToList(), vm.Codec, vm.Bitrate, vm.SampleRate);
+            var task = new AudioConvversionTask([.. Files], vm!.Codec, vm.Bitrate);
             return new MediaConversionViewModel(task);
         }
 
