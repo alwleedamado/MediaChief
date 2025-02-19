@@ -49,10 +49,8 @@
 		</Border>
 
 		<Grid Grid.Column="1" RowDefinitions="*, Auto">
-			<DataGrid Margin="20,40,40,0" ItemsSource="{Binding Conversions}">
-				<DataGrid.Background>
-					<SolidColorBrush Color="#000"/>
-				</DataGrid.Background>
+			<DataGrid GridLinesVisibility="Horizontal" BorderThickness="1"  Margin="20,40,40,0" ItemsSource="{Binding Conversions}">
+				
 				<DataGrid.Columns>
 					<DataGridTextColumn Binding="{Binding ConversionTypeName}" Header="Conversion Type"/>
 					<DataGridTextColumn Binding="{Binding Files.Count}" Header="Files Count"/>

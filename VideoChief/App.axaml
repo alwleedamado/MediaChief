@@ -2,16 +2,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:VideoChief"
 			 x:Class="VideoChief.App"
-             RequestedThemeVariant="Dark">
+             RequestedThemeVariant="Light">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 	<Application.DataTemplates>
 		<local:ViewLocator/>
 	</Application.DataTemplates>
     <Application.Styles>
-        <FluentTheme />
+        <FluentTheme DensityStyle="Compact"/>
 		<StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
 		<StyleInclude Source="avares://VideoChief/icons.axaml"/>
 
-		
+		<Style Selector="Button">
+			<Setter Property="Background" Value="blue"/>
+			<Setter Property="Foreground" Value="White"/>
+		</Style>
+		<Style Selector="PathIcon">
+			<Setter Property="Foreground" Value="White"/>
+		</Style>
 	</Application.Styles>
 </Application>

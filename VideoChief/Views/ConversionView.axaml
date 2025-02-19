@@ -9,14 +9,7 @@
 		WindowStartupLocation="CenterScreen"
 		ExtendClientAreaToDecorationsHint="True">
 	<Panel>
-		<ExperimentalAcrylicBorder>
-			<ExperimentalAcrylicBorder.Material>
-				<ExperimentalAcrylicMaterial
-					TintColor="Black"
-					TintOpacity="1"
-					MaterialOpacity="0.65"/>
-			</ExperimentalAcrylicBorder.Material>
-		</ExperimentalAcrylicBorder>
+		
 		<Grid RowDefinitions="Auto,2*,*">
 			<StackPanel Margin="40,40,20,20" Spacing="5" Orientation="Horizontal" HorizontalAlignment="Right">
 				<Button Command="{Binding ImportFolderCommand}" Content="Import Folder" />

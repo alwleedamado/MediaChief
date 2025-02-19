@@ -8,8 +8,6 @@
         x:Class="VideoChief.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="VideoChief"
-		TransparencyLevelHint="AcrylicBlur"
-		Background="Transparent"
 		ExtendClientAreaToDecorationsHint="True">
         <views:MainView />
 </Window>
