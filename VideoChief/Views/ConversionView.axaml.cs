@@ -69,7 +69,7 @@ public partial class ConversionView : ReactiveWindow<ConversionViewModel>
 
             foreach (var directory in directories)
             {
-                var directoryPath = regex.Replace(directory.Path.AbsolutePath.ToString(), (s) => "");
+                var directoryPath = regex.Replace(directory.Path.ToString(), (s) => "");
 
                 if (Directory.Exists(directoryPath))
                 {

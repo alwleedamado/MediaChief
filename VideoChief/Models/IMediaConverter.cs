@@ -8,6 +8,6 @@ namespace VideoChief.Models
     {
         ConversionType ConversionType { get; }
         List<MediaFile> Files { get; }
-        Task Convert();
+        Task Convert(string outputDir);
     }
 }

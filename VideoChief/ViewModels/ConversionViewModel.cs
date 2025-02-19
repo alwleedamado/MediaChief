@@ -7,12 +7,14 @@ using System.Windows.Input;
 using VideoChief.Models;
 using System.Reactive.Linq;
 using VideoChief.Media.Models;
+using System;
 
 namespace VideoChief.ViewModels
 {
     public class ConversionViewModel : ViewModelBase
     {
         private ConversionType _conversionType;
+
         public ConversionType ConversionType
         {
             get => _conversionType;
@@ -73,7 +75,7 @@ namespace VideoChief.ViewModels
 
         private MediaConversionViewModel CreateVideoTask()
         {
-            var task =  new VideoConversionTask(Files.ToList());
+            var task =  new VideoConversionTask([.. Files]);
             return new MediaConversionViewModel(task);
         }
     }

@@ -15,12 +15,13 @@ namespace VideoChief.Media.Convertors
             _bitrate = bitrate;
         }
 
-        public override async Task Convert()
+        public override async Task Convert(string outputDir)
         {
 
             if (File.Exists(Input))
             {
-                var outputDir = Path.Combine(Path.GetDirectoryName(Input)!, "OrbitOutput");
+                if (string.IsNullOrEmpty(outputDir))
+                    outputDir = Path.Combine(Path.GetDirectoryName(Input)!, "OrbitOutput");
                 if (!Path.Exists(outputDir)) Directory.CreateDirectory(outputDir);
                 var fileInfo = new FileInfo(Input);
                 var outputFile = $"{outputDir}/{fileInfo.Name.Split('.')[0]}.{_codec.ToLower()}";

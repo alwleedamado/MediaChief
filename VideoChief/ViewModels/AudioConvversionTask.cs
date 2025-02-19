@@ -22,14 +22,14 @@ namespace VideoChief.ViewModels
 
         public List<MediaFile> Files { get; private set; } = [];
 
-        public async Task Convert()
+        public async Task Convert(string outputDir)
         {
             Task[] tasks = new Task[Files.Count];
             int i = 0;
             foreach (var file in Files)
             {
                 var convertor = new AudioConvertor(file.Path, _codec.ToString(), _bitRate);
-                tasks[i++] = convertor.Convert();
+                tasks[i++] = convertor.Convert(outputDir);
             }
             await Task.WhenAll(tasks);
         }

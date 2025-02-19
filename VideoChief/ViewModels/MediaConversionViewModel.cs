@@ -13,9 +13,9 @@ namespace VideoChief.ViewModels
         public string ConversionTypeName => Enum.GetName(typeof(ConversionType), ConversionType)!;
         private readonly IMediaConverter _converter = converter;
 
-        public async Task StartConversion()
+        public async Task StartConversion(string outputDir)
         {
-            await _converter.Convert();  
+            await _converter.Convert(outputDir);  
         }
         
     }

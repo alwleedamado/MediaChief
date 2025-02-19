@@ -7,6 +7,7 @@ namespace VideoChief.ViewModels
 {
     internal class VideoConversionTask : IMediaConverter
     {
+
         public VideoConversionTask(List<MediaFile> files)
         {
             Files = files;
@@ -16,7 +17,7 @@ namespace VideoChief.ViewModels
 
         public List<MediaFile> Files {  get; private set; }
 
-        public async Task Convert()
+        public async Task Convert(string outputDir)
         {
             await Task.CompletedTask;
         }
