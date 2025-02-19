@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using Avalonia.Threading;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,18 +17,26 @@ namespace VideoChief.ViewModels
         {
             get => _conversionPercentage;
             set => this.RaiseAndSetIfChanged(ref _conversionPercentage, value);
-        } 
+        }
+        private ConversionState _isCompleted = ConversionState.Idle;
+        public ConversionState State
+        {
+            get => _isCompleted;
+            set => this.RaiseAndSetIfChanged(ref this._isCompleted, value);
+        }
         public string ConversionTypeName => Enum.GetName(typeof(ConversionType), ConversionType)!;
         private readonly MediaConverterBase _converter = converter;
 
         public async Task StartConversion(string outputDir)
         {
+            State = ConversionState.Started;
             _converter.SetProgressHandler(delegate(double value)
             {
-                ConversionPercentage = value;
+                Dispatcher.UIThread.Post(() => ConversionPercentage = value);
                 
             });
             await _converter.Convert(outputDir);  
+            State = ConversionState.Completed;
         }
         
     }

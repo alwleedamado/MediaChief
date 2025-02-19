@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using VideoChief.Models;
@@ -26,23 +27,25 @@ public partial class MainViewModel : ViewModelBase
     public ICommand ConvertAudioCommand { get; }
     public ICommand StartConversionCommand { get; }
     public ICommand SelectOutputCommand { get; }
+
     public MainViewModel()
     {
         Interaction = new Interaction<ConversionViewModel, MediaConversionViewModel>();
         OutputDirInteraction = new Interaction<Unit, string?>();
         ConvertAudioCommand = ReactiveCommand.CreateFromTask(async () => await OpenConversionDialog(ConversionType.Audio));
         ConvertVideoCommand = ReactiveCommand.CreateFromTask(async () => await OpenConversionDialog(ConversionType.Video));
-        StartConversionCommand = ReactiveCommand.CreateFromTask(async () =>
+        StartConversionCommand = ReactiveCommand.Create(() =>
         {
             foreach (var conversion in Conversions)
             {
-                await conversion.StartConversion(OutputDir);
+                if (conversion.State == ConversionState.Idle)
+                    ThreadPool.QueueUserWorkItem(async (o) => await conversion.StartConversion(OutputDir));
             }
         });
         SelectOutputCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var result = await OutputDirInteraction.Handle(Unit.Default);
-            if(!string.IsNullOrEmpty(result))
+            if (!string.IsNullOrEmpty(result))
                 OutputDir = result;
         });
         GlobalFFOptions.Configure(o =>
@@ -58,7 +61,6 @@ public partial class MainViewModel : ViewModelBase
     {
         var dialog = new ConversionViewModel(conversionType);
         var result = await Interaction.Handle(dialog);
-        Conversions.Clear();
         if (result != null)
         {
             Conversions.Add(result);
