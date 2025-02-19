@@ -5,23 +5,18 @@ using VideoChief.Models;
 
 namespace VideoChief.ViewModels
 {
-    internal class VideoConversionTask : IMediaConverter
+    internal class VideoConversionTask : MediaConverterBase
     {
 
-        public VideoConversionTask(List<MediaFile> files)
+        public VideoConversionTask(List<MediaFile> files):base(files)
         {
-            Files = files;
         }
 
-        public ConversionType ConversionType => ConversionType.Video;
+        public override ConversionType ConversionType => ConversionType.Video;
 
-        public List<MediaFile> Files {  get; private set; }
-
-        public async Task Convert(string outputDir)
+        public override async Task Convert(string outputDir)
         {
             await Task.CompletedTask;
         }
-
-        
     }
 }

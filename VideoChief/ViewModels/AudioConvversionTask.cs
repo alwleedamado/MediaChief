@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using VideoChief.Media.Convertors;
 using VideoChief.Media.Models;
@@ -6,32 +8,28 @@ using VideoChief.Models;
 
 namespace VideoChief.ViewModels
 {
-    internal class AudioConvversionTask : IMediaConverter
+    internal class AudioConvversionTask : MediaConverterBase
     {
         private readonly AudioCodec _codec;
         private readonly int _bitRate;
 
-        public AudioConvversionTask(List<MediaFile> files, AudioCodec codec, int bitRate)
+        public AudioConvversionTask(List<MediaFile> files, AudioCodec codec, int bitRate) : base(files)
         {
-            Files = files;
             _codec = codec;
             _bitRate = bitRate;
         }
 
-        public ConversionType ConversionType => ConversionType.Audio;
-
-        public List<MediaFile> Files { get; private set; } = [];
-
-        public async Task Convert(string outputDir)
+        public  override ConversionType ConversionType => ConversionType.Audio;
+        public override async Task Convert(string outputDir)
         {
-            Task[] tasks = new Task[Files.Count];
-            int i = 0;
+            int i = 1;
             foreach (var file in Files)
             {
                 var convertor = new AudioConvertor(file.Path, _codec.ToString(), _bitRate);
-                tasks[i++] = convertor.Convert(outputDir);
+                await convertor.Convert(outputDir);
+                ProgressEventHandler?.Invoke(i /(double) Files.Count * 100);
+                i++;
             }
-            await Task.WhenAll(tasks);
         }
     }
 }

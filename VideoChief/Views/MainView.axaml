@@ -56,7 +56,11 @@
 				<DataGrid.Columns>
 					<DataGridTextColumn Binding="{Binding ConversionTypeName}" Header="Conversion Type"/>
 					<DataGridTextColumn Binding="{Binding Files.Count}" Header="Files Count"/>
-
+					<DataGridTemplateColumn Header="Progress">
+						<DataTemplate>
+							<ProgressBar Value="{Binding ConversionPercentage}"/>
+						</DataTemplate>
+					</DataGridTemplateColumn>
 				</DataGrid.Columns>
 			</DataGrid>
 			<StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Row="1">
