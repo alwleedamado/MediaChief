@@ -1,13 +1,11 @@
 ﻿using ReactiveUI;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Reactive;
-using System.Windows.Input;
-using VideoChief.Models;
 using System.Reactive.Linq;
+using System.Windows.Input;
 using VideoChief.Media.Models;
-using System;
+using VideoChief.Models;
 
 namespace VideoChief.ViewModels
 {
@@ -48,7 +46,7 @@ namespace VideoChief.ViewModels
             ImportFilesCommand = ReactiveCommand.CreateFromTask(async () =>
             {
                 var files = await ImportFilesInteraction.Handle(Unit.Default);
-                foreach(var file in files)
+                foreach (var file in files)
                 {
                     Files.Add(new MediaFile(file));
                 }
@@ -75,7 +73,9 @@ namespace VideoChief.ViewModels
 
         private MediaConversionViewModel CreateVideoTask()
         {
-            var task =  new VideoConversionTask([.. Files]);
+            var vm = _selectedConversionView as VideoConversionViewModel;
+
+            var task = new VideoConversionTask([.. Files],vm!.Codec,vm.AudioCodec,vm.Bitrate, vm.FrameRate);
             return new MediaConversionViewModel(task);
         }
     }

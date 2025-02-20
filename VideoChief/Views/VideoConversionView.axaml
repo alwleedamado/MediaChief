@@ -4,5 +4,37 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="VideoChief.Views.VideoConversionView">
-  Welcome to Avalonia!
+	<Border Padding="40">
+		
+	<Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="100, 400">
+		<Grid.Styles>
+			<Style Selector=":is(Control)">
+				<Setter Property="Margin" Value="0,0,0,2"/>
+			</Style>
+			<Style Selector="Label">
+				<Setter Property="VerticalAlignment" Value="Center"/>
+			</Style>
+		</Grid.Styles>
+		<Label Content="Video Codec"/>
+		<ComboBox Width="200" SelectedItem="{Binding Codec}" ItemsSource="{Binding VideoCodecs}" Grid.Column="1">
+			<ComboBox.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding}"/>
+				</DataTemplate>
+			</ComboBox.ItemTemplate>
+		</ComboBox>
+		<Label Grid.Row="1" Content="Audio Codec"/>
+		<ComboBox Width="200" SelectedItem="{Binding AudioCodec}" ItemsSource="{Binding AudioCodecs}" Grid.Row="1" Grid.Column="1">
+			<ComboBox.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding}"/>
+				</DataTemplate>
+			</ComboBox.ItemTemplate>
+		</ComboBox>
+		<Label Grid.Row="2" Content="Video Bitrate"/>
+		<TextBox Text="{Binding Bitrate}" Grid.Row="2" Grid.Column="1"/>
+		<Label Grid.Row="3" Content="Frame Rate"/>
+		<TextBox Text="{Binding FrameRate}" Grid.Row="3" Grid.Column="1"/>
+	</Grid>
+	</Border>
 </UserControl>

@@ -8,7 +8,7 @@ using VideoChief.Models;
 
 namespace VideoChief.ViewModels
 {
-    public class MediaConversionViewModel(MediaConverterBase converter):ViewModelBase
+    public class MediaConversionViewModel(MediaConverterBase converter) : ViewModelBase
     {
         public ConversionType ConversionType => _converter.ConversionType;
         public List<MediaFile> Files => _converter.Files;
@@ -30,14 +30,14 @@ namespace VideoChief.ViewModels
         public async Task StartConversion(string outputDir)
         {
             State = ConversionState.Started;
-            _converter.SetProgressHandler(delegate(double value)
+            _converter.SetProgressHandler(delegate (double value)
             {
                 Dispatcher.UIThread.Post(() => ConversionPercentage = value);
-                
+
             });
-            await _converter.Convert(outputDir);  
+            await _converter.Convert(outputDir);
             State = ConversionState.Completed;
         }
-        
+
     }
 }

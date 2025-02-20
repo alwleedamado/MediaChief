@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using VideoChief.Media.Convertors;
 using VideoChief.Media.Models;
@@ -19,7 +17,7 @@ namespace VideoChief.ViewModels
             _bitRate = bitRate;
         }
 
-        public  override ConversionType ConversionType => ConversionType.Audio;
+        public override ConversionType ConversionType => ConversionType.Audio;
         public override async Task Convert(string outputDir)
         {
             int i = 1;
@@ -27,7 +25,7 @@ namespace VideoChief.ViewModels
             {
                 var convertor = new AudioConvertor(file.Path, _codec.ToString(), _bitRate);
                 await convertor.Convert(outputDir);
-                ProgressEventHandler?.Invoke(i /(double) Files.Count * 100);
+                ProgressEventHandler?.Invoke(i / (double)Files.Count * 100);
                 i++;
             }
         }

@@ -4,6 +4,9 @@
     {
         Mp3,
         Flac,
-        Wav
+        Wav,
+        AAC,
+        Opus,
+        Ogg
     }
 }

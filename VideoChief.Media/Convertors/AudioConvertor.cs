@@ -5,7 +5,7 @@ namespace VideoChief.Media.Convertors
     public class AudioConvertor : ConvertorBase
     {
         private readonly string _input;
-        private string _codec;
+        private readonly string _codec;
         private readonly int _bitrate;
 
         public AudioConvertor(string input, string codec, int bitrate) : base(input)

@@ -7,7 +7,7 @@ namespace VideoChief.Models
 {
     public abstract class MediaConverterBase(List<MediaFile> files)
     {
-        public abstract ConversionType ConversionType { get; } 
+        public abstract ConversionType ConversionType { get; }
         public List<MediaFile> Files { get; } = files;
 
         public Action<double>? ProgressEventHandler;
