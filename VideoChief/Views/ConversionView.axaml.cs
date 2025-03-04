@@ -43,13 +43,7 @@ public partial class ConversionView : ReactiveWindow<ConversionViewModel>
         });
         if (files.Count > 0)
         {
-            Regex regex = UriRegex();
-
-            var paths = files.Select(x =>
-            {
-                var path = x.Path.ToString();
-                return regex.Replace(path, s => "");
-            }).ToList();
+            var paths = files.Select(x =>x.Path.LocalPath).ToList();
             ctx.SetOutput(paths);
         }
 
@@ -65,11 +59,10 @@ public partial class ConversionView : ReactiveWindow<ConversionViewModel>
 
         if (directories.Count > 0)
         {
-            Regex regex = UriRegex();
 
             foreach (var directory in directories)
             {
-                var directoryPath = regex.Replace(directory.Path.ToString(), (s) => "");
+                var directoryPath = directory.Path.LocalPath;
 
                 if (Directory.Exists(directoryPath))
                 {
@@ -97,7 +90,4 @@ public partial class ConversionView : ReactiveWindow<ConversionViewModel>
         List<string> exts = [".mp4", ".mkv", ".flv", ".webm", ".mp3", ".aac", ".ogg"];
         return exts.Contains(ext);
     }
-
-    [GeneratedRegex("file:///")]
-    private static partial Regex UriRegex();
 }

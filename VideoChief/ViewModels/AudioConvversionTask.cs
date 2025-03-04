@@ -8,10 +8,10 @@ namespace VideoChief.ViewModels
 {
     internal class AudioConvversionTask : MediaConverterBase
     {
-        private readonly AudioCodec _codec;
+        private readonly string _codec;
         private readonly int _bitRate;
 
-        public AudioConvversionTask(List<MediaFile> files, AudioCodec codec, int bitRate) : base(files)
+        public AudioConvversionTask(List<MediaFile> files, string codec, int bitRate) : base(files)
         {
             _codec = codec;
             _bitRate = bitRate;
@@ -23,7 +23,7 @@ namespace VideoChief.ViewModels
             int i = 1;
             foreach (var file in Files)
             {
-                var convertor = new AudioConvertor(file.Path, _codec.ToString(), _bitRate);
+                var convertor = new AudioConvertor(file.Path, _codec, _bitRate);
                 await convertor.Convert(outputDir);
                 ProgressEventHandler?.Invoke(i / (double)Files.Count * 100);
                 i++;

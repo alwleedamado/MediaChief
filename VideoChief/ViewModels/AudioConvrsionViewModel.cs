@@ -10,8 +10,8 @@ namespace VideoChief.ViewModels
         public int[] Bitrates { get; } = [124, 196, 320];
 
 
-        private AudioCodec _codec = AudioCodec.Mp3;
-        public AudioCodec Codec
+        private string _codec = AudioCodec.Mp3.ToString();
+        public string Codec
         {
             get { return _codec; }
             set { this.RaiseAndSetIfChanged(ref _codec, value); }

@@ -37,7 +37,7 @@ public partial class MainWindow : ReactiveWindow<MainViewModel>
         if (directories.Count > 0)
         {
             Regex regex = UriRegex();
-            var ret = regex.Replace(directories[0].Path.AbsolutePath, s => "");
+            var ret = directories[0].Path.LocalPath;
             ctx.SetOutput(ret);
         }
     }
