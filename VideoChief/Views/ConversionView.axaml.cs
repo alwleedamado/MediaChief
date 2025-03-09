@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using VideoChief.ViewModels;
 

@@ -8,6 +8,11 @@
 
   <ItemGroup>
     <PackageReference Include="FFMpegCore" Version="5.1.0" />
+    <PackageReference Include="LibVLCSharp" Version="3.9.2" />
   </ItemGroup>
-
+  
+  <ItemGroup>
+    <PackageReference Condition="$([MSBuild]::IsOsPlatform('Windows'))" Include="VideoLAN.LibVLC.Windows" />
+    <PackageReference Condition="$([MSBuild]::IsOsPlatform('OSX'))" Include="VideoLAN.LibVLC.Mac" />
+  </ItemGroup>
 </Project>
